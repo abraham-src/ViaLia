@@ -1,0 +1,42 @@
+# syntax=docker/dockerfile:1.7
+# Build context: repository root (see docker/docker-compose.yml).
+FROM node:20-bookworm-slim
+
+# Prisma query engine needs OpenSSL.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false \
+    NPM_CONFIG_FUND=false \
+    NPM_CONFIG_AUDIT=false \
+    CHECKPOINT_DISABLE=1
+
+WORKDIR /app
+
+# 1) Dependencies (cached while package manifests do not change).
+COPY package.json package-lock.json tsconfig.base.json ./
+COPY packages/shared-types/package.json packages/shared-types/
+COPY packages/shared-utils/package.json packages/shared-utils/
+COPY apps/api/package.json apps/api/
+COPY apps/simulator/package.json apps/simulator/
+COPY apps/web/package.json apps/web/
+# Only this service's workspaces (no SQLite, no Vite in this image).
+RUN npm ci --include-workspace-root \
+      --workspace @simu/shared-types --workspace @simu/shared-utils --workspace @simu/api
+
+# 2) Sources + build.
+COPY packages ./packages
+COPY database ./database
+COPY apps/api ./apps/api
+RUN npm run build -w @simu/shared-types \
+ && npm run build -w @simu/shared-utils \
+ && npm run prisma:generate -w @simu/api \
+ && npm run build -w @simu/api
+
+USER node
+WORKDIR /app/apps/api
+EXPOSE 3000
+
+# migrate deploy → idempotent seed → server
+CMD ["npm", "run", "start:docker"]

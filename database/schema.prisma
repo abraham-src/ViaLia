@@ -1,0 +1,395 @@
+// SIMU · CDMX — database schema (PostgreSQL 16 + PostGIS 3.4)
+//
+// PostGIS notes:
+// - Every `geom` column is a STORED generated column computed from longitude/latitude
+//   (see migrations/20260929000000_init/migration.sql). Prisma never writes it.
+// - GIST indexes on geometry columns live only in SQL migrations; Prisma cannot declare them.
+// - accessible_routes.* geometries are written with raw SQL (ST_GeomFromText).
+// - Enum values must match packages/shared-types/src/enums.ts (checked by apps/api/test).
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+// ───────────────────────────── Enums ─────────────────────────────
+
+enum RoleName {
+  admin
+  operator
+  maintenance
+  citizen
+
+  @@map("role_name")
+}
+
+enum UserStatus {
+  active
+  inactive
+  suspended
+
+  @@map("user_status")
+}
+
+enum DeviceType {
+  camera
+  drain
+  traffic_light
+  sensor
+  gateway
+
+  @@map("device_type")
+}
+
+enum DeviceStatus {
+  online
+  offline
+  degraded
+  maintenance
+
+  @@map("device_status")
+}
+
+enum DrainStatus {
+  normal
+  caution
+  alert
+  critical
+
+  @@map("drain_status")
+}
+
+enum IncidentType {
+  water_accumulation
+  drain_obstruction
+  accident
+  obstacle
+  infrastructure_failure
+  accessibility_block
+  flood_risk
+
+  @@map("incident_type")
+}
+
+enum IncidentPriority {
+  low
+  medium
+  high
+  critical
+
+  @@map("incident_priority")
+}
+
+enum IncidentStatus {
+  pending
+  validated
+  assigned
+  in_progress
+  resolved
+  rejected
+
+  @@map("incident_status")
+}
+
+enum AccessibilityPointType {
+  ramp
+  sidewalk
+  crosswalk
+  accessible_route
+  obstacle
+  temporarily_disabled
+
+  @@map("accessibility_point_type")
+}
+
+enum AccessibilityStatus {
+  available
+  blocked
+  damaged
+  unknown
+
+  @@map("accessibility_status")
+}
+
+enum RouteStatus {
+  active
+  blocked
+  alternative
+
+  @@map("route_status")
+}
+
+// ───────────────────────────── Identity ─────────────────────────────
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  name        RoleName @unique
+  description String
+  users       User[]
+
+  @@map("roles")
+}
+
+model User {
+  id                String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String
+  email             String     @unique
+  passwordHash      String     @map("password_hash")
+  roleId            Int        @map("role_id")
+  role              Role       @relation(fields: [roleId], references: [id])
+  status            UserStatus @default(active)
+  createdAt         DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  assignedIncidents Incident[] @relation("IncidentAssignee")
+  refreshTokens     RefreshToken[]
+
+  @@index([roleId])
+  @@map("users")
+}
+
+/// One row per issued refresh token (its JWT `jti`). Rotation revokes the old row and
+/// points `replaced_by` to the new one; presenting a revoked token revokes the whole family.
+model RefreshToken {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(3)
+  replacedBy String?   @map("replaced_by") @db.Uuid
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+// ───────────────────────────── Devices ─────────────────────────────
+
+/// Parent table for cameras, drains, traffic lights, sensors and gateways.
+model Device {
+  id            String                                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  deviceCode    String                                @unique @map("device_code")
+  type          DeviceType
+  name          String
+  latitude      Float
+  longitude     Float
+  /// GENERATED ALWAYS AS (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) STORED
+  geom          Unsupported("geometry(Point, 4326)")?
+  status        DeviceStatus                          @default(offline)
+  lastHeartbeat DateTime?                             @map("last_heartbeat") @db.Timestamptz(3)
+  metadata      Json                                  @default("{}")
+  createdAt     DateTime                              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime                              @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  camera     Camera?
+  drain      Drain?
+  readings   SensorReading[]
+  incidents  Incident[]
+  heartbeats Heartbeat[]
+  events     DeviceEvent[]
+
+  @@index([type])
+  @@index([status])
+  @@map("devices")
+}
+
+model Camera {
+  id                  String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  deviceId            String       @unique @map("device_id") @db.Uuid
+  device              Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  model               String
+  locationDescription String       @map("location_description")
+  streamUrl           String?      @map("stream_url")
+  status              DeviceStatus @default(offline)
+
+  @@map("cameras")
+}
+
+model Drain {
+  id               String                                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  deviceId         String                                @unique @map("device_id") @db.Uuid
+  device           Device                                @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  latitude         Float
+  longitude        Float
+  /// GENERATED ALWAYS AS (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) STORED
+  geom             Unsupported("geometry(Point, 4326)")?
+  /// 0–100 (CHECK constraint in SQL)
+  obstructionLevel Int                                   @default(0) @map("obstruction_level")
+  status           DrainStatus                           @default(normal)
+  lastReadingAt    DateTime?                             @map("last_reading_at") @db.Timestamptz(3)
+
+  @@map("drains")
+}
+
+/// One row per sensor measurement. (device_id, recorded_at) is unique so that
+/// store-and-forward retries from the gateway are idempotent.
+model SensorReading {
+  id         BigInt   @id @default(autoincrement())
+  deviceId   String   @map("device_id") @db.Uuid
+  device     Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  value      Decimal  @db.Decimal(12, 4)
+  unit       String
+  recordedAt DateTime @map("recorded_at") @db.Timestamptz(3)
+  receivedAt DateTime @default(now()) @map("received_at") @db.Timestamptz(3)
+  /// false when the reading arrived late through store-and-forward
+  synced     Boolean  @default(true)
+  metadata   Json     @default("{}")
+
+  @@unique([deviceId, recordedAt])
+  @@map("sensor_readings")
+}
+
+/// Discrete events reported by devices: camera detections (WATER_ACCUMULATION, OBSTACLE, ...)
+/// and weather reports (WEATHER). (device_id, event_type, recorded_at) is unique so that
+/// store-and-forward retries are idempotent. Feeds GET /events and the rules engine.
+model DeviceEvent {
+  id         BigInt   @id @default(autoincrement())
+  deviceId   String   @map("device_id") @db.Uuid
+  device     Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  eventType  String   @map("event_type")
+  /// 0–1, camera detections only (CHECK constraint in SQL)
+  confidence Decimal? @db.Decimal(4, 3)
+  payload    Json     @default("{}")
+  recordedAt DateTime @map("recorded_at") @db.Timestamptz(3)
+  receivedAt DateTime @default(now()) @map("received_at") @db.Timestamptz(3)
+  synced     Boolean  @default(true)
+
+  @@unique([deviceId, eventType, recordedAt])
+  @@index([recordedAt(sort: Desc)])
+  @@index([eventType, recordedAt(sort: Desc)])
+  @@map("device_events")
+}
+
+model Heartbeat {
+  id         BigInt       @id @default(autoincrement())
+  deviceId   String       @map("device_id") @db.Uuid
+  device     Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  receivedAt DateTime     @default(now()) @map("received_at") @db.Timestamptz(3)
+  status     DeviceStatus
+
+  @@index([deviceId, receivedAt(sort: Desc)])
+  @@map("heartbeats")
+}
+
+// ───────────────────────────── Incidents ─────────────────────────────
+
+model Incident {
+  id           String                                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  deviceId     String?                               @map("device_id") @db.Uuid
+  device       Device?                               @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+  type         IncidentType
+  description  String
+  priority     IncidentPriority                      @default(medium)
+  /// 0–1 (CHECK constraint in SQL). Manual reports use 1.
+  confidence   Decimal                               @default(1) @db.Decimal(4, 3)
+  status       IncidentStatus                        @default(pending)
+  latitude     Float
+  longitude    Float
+  /// GENERATED ALWAYS AS (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) STORED
+  geom         Unsupported("geometry(Point, 4326)")?
+  createdAt    DateTime                              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime                              @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  validatedAt  DateTime?                             @map("validated_at") @db.Timestamptz(3)
+  resolvedAt   DateTime?                             @map("resolved_at") @db.Timestamptz(3)
+  assignedToId String?                               @map("assigned_to") @db.Uuid
+  assignedTo   User?                                 @relation("IncidentAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  metadata     Json                                  @default("{}")
+
+  events IncidentEvent[]
+
+  @@index([status])
+  @@index([priority])
+  @@index([type])
+  @@index([createdAt(sort: Desc)])
+  @@index([deviceId])
+  @@index([assignedToId])
+  @@map("incidents")
+}
+
+/// Append-only log (bitácora) of everything that happens to an incident.
+model IncidentEvent {
+  id         BigInt   @id @default(autoincrement())
+  incidentId String   @map("incident_id") @db.Uuid
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  eventType  String   @map("event_type")
+  payload    Json     @default("{}")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([incidentId, createdAt])
+  @@map("incident_events")
+}
+
+// ───────────────────────────── Accessibility ─────────────────────────────
+
+model AccessibilityPoint {
+  id        String                                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      AccessibilityPointType
+  latitude  Float
+  longitude Float
+  /// GENERATED ALWAYS AS (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) STORED
+  geom      Unsupported("geometry(Point, 4326)")?
+  status    AccessibilityStatus                   @default(unknown)
+  /// e.g. seed_mock, official_cdmx, citizen_report
+  source    String
+  metadata  Json                                  @default("{}")
+
+  ramps Ramp[]
+
+  @@index([type])
+  @@map("accessibility_points")
+}
+
+model Ramp {
+  id                   String                                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  accessibilityPointId String?                               @map("accessibility_point_id") @db.Uuid
+  accessibilityPoint   AccessibilityPoint?                   @relation(fields: [accessibilityPointId], references: [id], onDelete: SetNull)
+  latitude             Float
+  longitude            Float
+  /// GENERATED ALWAYS AS (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) STORED
+  geom                 Unsupported("geometry(Point, 4326)")?
+  status               AccessibilityStatus                   @default(unknown)
+  /// percent
+  slope                Decimal?                              @db.Decimal(5, 2)
+  widthM               Decimal?                              @map("width_m") @db.Decimal(5, 2)
+
+  @@index([accessibilityPointId])
+  @@map("ramps")
+}
+
+/// Geometries are required; rows are inserted with raw SQL (Prisma cannot write PostGIS types).
+model AccessibleRoute {
+  id          String                                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  origin      Unsupported("geometry(Point, 4326)")
+  destination Unsupported("geometry(Point, 4326)")
+  path        Unsupported("geometry(LineString, 4326)")
+  status      RouteStatus                                @default(active)
+  createdAt   DateTime                                   @default(now()) @map("created_at") @db.Timestamptz(3)
+  metadata    Json                                       @default("{}")
+
+  @@map("accessible_routes")
+}
+
+// ───────────────────────────── Rules engine ─────────────────────────────
+
+/// conditions: { "all": [ { "fact": "drain.obstruction_level", "op": "gt", "value": 80 }, ... ] }
+/// action:     { "incident_type": "flood_risk", "set_priority": "critical", "emit_alert": true }
+model Rule {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String   @unique
+  description String
+  conditions  Json
+  action      Json
+  enabled     Boolean  @default(true)
+  /// Evaluation order (ascending).
+  sortOrder   Int      @default(100) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([enabled, sortOrder])
+  @@map("rules")
+}

@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/.vite
+**/coverage
+**/*.tsbuildinfo
+**/*.db
+**/__pycache__
+**/.venv
+.git
+.env
+.env.*
+docs
+playwright-report
+test-results

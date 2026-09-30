@@ -1,0 +1,7 @@
+# Entry point so that `docker compose up` works from the repo root.
+# Services live in docker/docker-compose.yml (spec §2.2). Requires Docker Compose ≥ 2.20.
+name: simu
+
+include:
+  - path: docker/docker-compose.yml
+    env_file: .env

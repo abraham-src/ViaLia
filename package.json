@@ -1,0 +1,55 @@
+{
+  "name": "simu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema Inteligente de Monitoreo Urbano (SIMU) para la Ciudad de México",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "workspaces": [
+    "packages/shared-types",
+    "packages/shared-utils",
+    "apps/api",
+    "apps/simulator",
+    "apps/web"
+  ],
+  "scripts": {
+    "build:packages": "npm run build -w @simu/shared-types && npm run build -w @simu/shared-utils",
+    "build": "npm run build:packages && npm run prisma:generate -w @simu/api && npm run build -w @simu/api -w @simu/simulator -w @simu/web",
+    "dev:api": "npm run dev -w @simu/api",
+    "dev:web": "npm run dev -w @simu/web",
+    "dev:simulator": "npm run dev -w @simu/simulator",
+    "db:migrate": "npm run db:migrate -w @simu/api",
+    "db:deploy": "npm run db:deploy -w @simu/api",
+    "db:seed": "npm run db:seed -w @simu/api",
+    "db:studio": "npm run db:studio -w @simu/api",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc -p database/tsconfig.json && tsc -p e2e/tsconfig.json",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "playwright test -c e2e",
+    "test:e2e:report": "playwright show-report playwright-report",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.63.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "prisma@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.12": true,
+    "better-sqlite3@12.11.1": true
+  }
+}

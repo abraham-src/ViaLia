@@ -1,0 +1,32 @@
+# syntax=docker/dockerfile:1.7
+# Build context: repository root (see docker/docker-compose.yml).
+FROM node:20-bookworm-slim AS build
+
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false \
+    NPM_CONFIG_FUND=false \
+    NPM_CONFIG_AUDIT=false
+
+WORKDIR /app
+
+COPY package.json package-lock.json tsconfig.base.json ./
+COPY packages/shared-types/package.json packages/shared-types/
+COPY packages/shared-utils/package.json packages/shared-utils/
+COPY apps/api/package.json apps/api/
+COPY apps/simulator/package.json apps/simulator/
+COPY apps/web/package.json apps/web/
+# Only this service's workspaces (no Prisma, no SQLite in this image).
+# The web imports @simu/shared-utils (incident workflow), so it must be installed and built too.
+RUN npm ci --include-workspace-root \
+      --workspace @simu/shared-types --workspace @simu/shared-utils --workspace @simu/web
+
+COPY packages ./packages
+COPY apps/web ./apps/web
+RUN npm run build -w @simu/shared-types \
+ && npm run build -w @simu/shared-utils \
+ && npm run build -w @simu/web
+
+# ── Runtime: static files + reverse proxy to the API ──
+FROM nginx:1.27-alpine
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/apps/web/dist /usr/share/nginx/html
+EXPOSE 80

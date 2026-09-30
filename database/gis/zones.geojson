@@ -1,0 +1,91 @@
+{
+  "type": "FeatureCollection",
+  "name": "simu_zones",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "ZONE-001",
+        "name": "Roma Norte",
+        "alcaldia": "Cuauhtémoc",
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.17, 19.412],
+            [-99.152, 19.412],
+            [-99.152, 19.426],
+            [-99.17, 19.426],
+            [-99.17, 19.412]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "ZONE-002",
+        "name": "Centro Histórico",
+        "alcaldia": "Cuauhtémoc",
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.148, 19.426],
+            [-99.126, 19.426],
+            [-99.126, 19.44],
+            [-99.148, 19.44],
+            [-99.148, 19.426]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "ZONE-003",
+        "name": "Condesa",
+        "alcaldia": "Cuauhtémoc",
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.18, 19.404],
+            [-99.165, 19.404],
+            [-99.165, 19.418],
+            [-99.18, 19.418],
+            [-99.18, 19.404]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "ZONE-004",
+        "name": "Coyoacán",
+        "alcaldia": "Coyoacán",
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.17, 19.344],
+            [-99.156, 19.344],
+            [-99.156, 19.354],
+            [-99.17, 19.354],
+            [-99.17, 19.344]
+          ]
+        ]
+      }
+    }
+  ]
+}

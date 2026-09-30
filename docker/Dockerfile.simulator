@@ -1,0 +1,38 @@
+# syntax=docker/dockerfile:1.7
+# Build context: repository root (see docker/docker-compose.yml).
+FROM node:20-bookworm-slim
+
+# better-sqlite3 ships prebuilt binaries; the toolchain is only a fallback to compile it.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false \
+    NPM_CONFIG_FUND=false \
+    NPM_CONFIG_AUDIT=false
+
+WORKDIR /app
+
+COPY package.json package-lock.json tsconfig.base.json ./
+COPY packages/shared-types/package.json packages/shared-types/
+COPY packages/shared-utils/package.json packages/shared-utils/
+COPY apps/api/package.json apps/api/
+COPY apps/simulator/package.json apps/simulator/
+COPY apps/web/package.json apps/web/
+# Only this service's workspaces (no Prisma, no Vite in this image).
+RUN npm ci --include-workspace-root \
+      --workspace @simu/shared-types --workspace @simu/shared-utils --workspace @simu/simulator
+
+COPY packages ./packages
+COPY apps/simulator ./apps/simulator
+RUN npm run build -w @simu/shared-types \
+ && npm run build -w @simu/shared-utils \
+ && npm run build -w @simu/simulator
+
+# SQLite store-and-forward file lives here (Phase 4); mounted as a volume.
+RUN mkdir -p /data && chown node:node /data
+
+USER node
+WORKDIR /app/apps/simulator
+EXPOSE 4000
+CMD ["node", "dist/server.js"]

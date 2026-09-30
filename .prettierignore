@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+database/migrations/**/*.sql
+package-lock.json
+database/gis/pedestrian-network.geojson
+playwright-report
+test-results

@@ -1,0 +1,38 @@
+# Dependencias
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# Builds
+dist/
+build/
+*.tsbuildinfo
+.vite/
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Store-and-forward local del gateway / simulador
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

@@ -1,0 +1,203 @@
+@import 'tailwindcss';
+
+/* SIMU design tokens — control-room palette (spec §7.1). Dark by default. */
+@theme {
+  --color-base: #0f1419;
+  --color-surface: #161b22;
+  --color-surface-2: #1c232c;
+  --color-line: #2a3139;
+  --color-fg: #e6edf3;
+  --color-fg-muted: #8b949e;
+  --color-accent: #1f6feb;
+  --color-ok: #2ea043;
+  --color-warn: #d29922;
+  --color-danger: #da3633;
+  --color-critical: #f85149;
+
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  /* Centro de control (/centro): paleta clara del maquetado. Solo la usan las clases cx-*,
+     así que la consola técnica oscura no cambia. */
+  --color-cx-bg: #f1f4f9;
+  --color-cx-card: #ffffff;
+  --color-cx-ink: #0b1b34;
+  --color-cx-ink2: #4a5872;
+  --color-cx-ink3: #8591a6;
+  --color-cx-line: #e3e8f0;
+  --color-cx-line2: #eef2f7;
+  --color-cx-navy: #0b1b34;
+  --color-cx-navy2: #13284b;
+  --color-cx-blue: #2563eb;
+  --color-cx-blue2: #1d4ed8;
+  --color-cx-bluesoft: #eaf1ff;
+  --color-cx-critical: #e5484d;
+  --color-cx-high: #f5812a;
+  --color-cx-medium: #eeb000;
+  --color-cx-low: #3b9cf0;
+  --color-cx-ok: #1fa464;
+  --font-display: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --shadow-cx: 0 1px 2px rgb(16 24 40 / 0.04), 0 12px 32px -18px rgb(16 24 40 / 0.22);
+  --shadow-cx-lg: 0 2px 6px rgb(16 24 40 / 0.06), 0 24px 48px -20px rgb(16 24 40 / 0.3);
+
+  /* Subtle entry for live items (spec §7.4: fade in, no exaggerated slides). */
+  --animate-fade-in: fade-in 400ms ease-out;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ── MapLibre: dark popups and controls matching the control-room tokens ── */
+.simu-popup-wrap .maplibregl-popup-content {
+  background: var(--color-surface);
+  color: var(--color-fg);
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  padding: 0;
+  box-shadow: none;
+  font-family: var(--font-sans);
+}
+.simu-popup-wrap .maplibregl-popup-tip {
+  border-top-color: var(--color-line) !important;
+  border-bottom-color: var(--color-line) !important;
+}
+.simu-popup-wrap .maplibregl-popup-close-button {
+  color: var(--color-fg-muted);
+  font-size: 16px;
+  padding: 0 6px;
+}
+.simu-popup {
+  font-size: 12px;
+  min-width: 220px;
+}
+.simu-popup-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px 24px 4px 8px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface-2);
+}
+.simu-popup-sub {
+  padding: 4px 8px;
+  color: var(--color-fg-muted);
+}
+.simu-popup-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.simu-popup-table th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--color-fg-muted);
+  padding: 2px 8px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.simu-popup-table td {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+}
+.simu-popup-table tr + tr {
+  border-top: 1px solid var(--color-line);
+}
+.simu-muted {
+  color: var(--color-fg-muted);
+}
+.simu-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  border: 1px solid var(--color-line);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+.simu-chip-ok {
+  color: var(--color-ok);
+  border-color: color-mix(in srgb, var(--color-ok) 50%, transparent);
+}
+.simu-chip-warn {
+  color: var(--color-warn);
+  border-color: color-mix(in srgb, var(--color-warn) 50%, transparent);
+}
+.simu-chip-danger,
+.simu-chip-critical {
+  color: var(--color-critical);
+  border-color: color-mix(in srgb, var(--color-critical) 60%, transparent);
+}
+.simu-chip-accent {
+  color: #58a6ff;
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+.simu-chip-neutral {
+  color: var(--color-fg-muted);
+}
+.maplibregl-ctrl-group {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-line);
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+.maplibregl-ctrl-group button + button {
+  border-top: 1px solid var(--color-line) !important;
+}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(0.85);
+}
+.maplibregl-ctrl-scale {
+  background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+  color: var(--color-fg-muted);
+  border-color: var(--color-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.maplibregl-ctrl-attrib {
+  background: color-mix(in srgb, var(--color-surface) 85%, transparent) !important;
+  color: var(--color-fg-muted);
+  font-size: 10px;
+}
+.maplibregl-ctrl-attrib a {
+  color: var(--color-fg-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+}

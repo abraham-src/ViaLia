@@ -1,0 +1,73 @@
+{
+  "type": "FeatureCollection",
+  "name": "simu_flood_risk_zones",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "FLOOD-001",
+        "name": "Bajo de Álvaro Obregón y Orizaba",
+        "risk_level": "high",
+        "related_devices": ["DRAIN-001", "CAM-001"],
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.1612, 19.4176],
+            [-99.158, 19.4176],
+            [-99.1576, 19.4196],
+            [-99.1608, 19.4199],
+            [-99.1612, 19.4176]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "FLOOD-002",
+        "name": "Centro oriente (hundimiento diferencial)",
+        "risk_level": "medium",
+        "related_devices": ["DRAIN-002"],
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.1355, 19.429],
+            [-99.13, 19.429],
+            [-99.13, 19.433],
+            [-99.1355, 19.433],
+            [-99.1355, 19.429]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "FLOOD-003",
+        "name": "Av. México y Michoacán",
+        "risk_level": "medium",
+        "related_devices": ["DRAIN-003", "CAM-003"],
+        "source": "seed_mock"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-99.1705, 19.4098],
+            [-99.1675, 19.4098],
+            [-99.1675, 19.413],
+            [-99.1705, 19.413],
+            [-99.1705, 19.4098]
+          ]
+        ]
+      }
+    }
+  ]
+}
