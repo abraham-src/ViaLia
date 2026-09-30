@@ -4,6 +4,6 @@
  */
 export const BRAND = {
   name: 'ViaLia',
-  tagline: 'Urban Intelligence',
+  tagline: 'Smart Urban Mobility',
   city: 'Ciudad de México',
 } as const;

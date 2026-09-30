@@ -2,6 +2,7 @@ import { CloudRain, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { LogoMark } from '../../centro/components/Logo';
 import { useDevices, useWeather } from '../../hooks/queries';
 import { stopLive } from '../../hooks/useLiveSync';
 import { api } from '../../lib/api';
@@ -96,7 +97,10 @@ export function TopBar() {
 
   return (
     <header className="col-span-2 flex h-10 items-center gap-4 border-b border-line bg-surface px-3">
-      <span className="font-mono text-[13px] font-medium tracking-wide">ViaLia · CDMX</span>
+      <span className="flex items-center gap-2">
+        <LogoMark size={20} />
+        <span className="font-mono text-[13px] font-medium tracking-wide">ViaLia · CDMX</span>
+      </span>
       <span className="h-4 w-px bg-line" aria-hidden />
       {isStaff(user) && <DeviceSummary />}
       <WeatherBadge />
