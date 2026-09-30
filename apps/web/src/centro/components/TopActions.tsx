@@ -60,7 +60,7 @@ export function SearchBox({ className = '' }: { className?: string }) {
           label: `${d.device_code} · ${d.name}`,
           hint: DEVICE_TYPE_LABEL[d.type],
           icon: d.type === 'camera' ? Video : d.type === 'drain' ? Droplets : MapPinned,
-          color: '#2563eb',
+          color: '#1f5fa6',
           go: () => {
             focus({ center: [d.longitude, d.latitude], zoom: 17, label: d.device_code });
             navigate('/centro');
@@ -76,7 +76,7 @@ export function SearchBox({ className = '' }: { className?: string }) {
           label: z.name,
           hint: `Zona ${z.code}${z.alcaldia ? ` · ${z.alcaldia}` : ''}`,
           icon: MapPinned,
-          color: '#0b1b34',
+          color: '#143254',
           go: () => {
             focus({ center: [c[0], c[1]], zoom: 15, label: z.name });
             navigate('/centro');
@@ -88,8 +88,8 @@ export function SearchBox({ className = '' }: { className?: string }) {
   }, [q, data, navigate, focus]);
 
   return (
-    <div ref={box} className={`relative ${className}`}>
-      <label className="flex h-11 w-[300px] items-center gap-2.5 rounded-[14px] border border-cx-line bg-white px-3.5 shadow-cx focus-within:border-cx-blue/50">
+    <div ref={box} className={`relative min-w-0 flex-1 sm:flex-none ${className}`}>
+      <label className="flex h-11 w-full items-center gap-2.5 sm:w-[300px] rounded-[14px] border border-cx-line bg-white px-3.5 shadow-cx focus-within:border-cx-blue/50">
         <Search size={18} strokeWidth={2.1} className="shrink-0 text-cx-ink3" aria-hidden />
         <input
           value={q}
@@ -116,7 +116,7 @@ export function SearchBox({ className = '' }: { className?: string }) {
         )}
       </label>
       {open && q.trim().length >= 2 && (
-        <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[360px] overflow-hidden rounded-[16px] border border-cx-line bg-white p-1.5 shadow-cx-lg">
+        <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-[16px] border border-cx-line bg-white p-1.5 shadow-cx-lg">
           {results.length === 0 ? (
             <p className="px-3 py-4 text-center text-[13px] text-cx-ink3">
               Sin resultados para “{q}”.
@@ -176,7 +176,7 @@ export function AlertsBell() {
         )}
       </button>
       {open && (
-        <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[340px] rounded-[16px] border border-cx-line bg-white p-2 shadow-cx-lg">
+        <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[min(340px,calc(100vw-2rem))] rounded-[16px] border border-cx-line bg-white p-2 shadow-cx-lg">
           <div className="px-2 pb-1 pt-1 text-[12px] font-semibold uppercase tracking-wide text-cx-ink3">
             Alertas en vivo
           </div>
@@ -218,7 +218,7 @@ export function Avatar() {
   const { user } = useCxData();
   return (
     <div
-      className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-[#13284b] to-[#0b1b34] text-[14px] font-bold text-white shadow-cx"
+      className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-[#1b3d66] to-[#143254] text-[14px] font-bold text-white shadow-cx"
       title={user ? `${user.name} · ${ROLE_LABEL[user.role]}` : undefined}
     >
       {initials(user?.name)}

@@ -42,7 +42,7 @@ export function IncidentPin({
               dx="0"
               dy="2"
               stdDeviation="1.6"
-              floodColor="#0b1b34"
+              floodColor="#143254"
               floodOpacity="0.28"
             />
           </filter>
@@ -149,14 +149,14 @@ export function CameraPin({
       onClick={onClick}
       title={title}
       className={`cx-marker relative grid place-items-center rounded-full ${active ? 'cx-pulse' : ''}`}
-      style={{ width: size, height: size, ...halo('#2563eb', 0.35) }}
+      style={{ width: size, height: size, ...halo('#1f5fa6', 0.35) }}
     >
       <span
         className="grid size-full place-items-center rounded-full border-[3px] border-white text-white"
         style={{
-          background: active ? 'linear-gradient(145deg,#3b7bff,#1d4ed8)' : '#13284b',
+          background: active ? 'linear-gradient(145deg,#2b6cb3,#174b86)' : '#1b3d66',
           boxShadow: active
-            ? '0 0 0 9px rgb(37 99 235 / 0.16), 0 10px 22px -8px rgb(29 78 216 / 0.9)'
+            ? '0 0 0 9px rgb(31 95 166 / 0.16), 0 10px 22px -8px rgb(29 78 216 / 0.9)'
             : '0 6px 14px -6px rgb(11 27 52 / 0.7)',
         }}
       >
@@ -254,7 +254,7 @@ export function TrafficLightPin({
       title={title}
       className="cx-marker relative flex flex-col items-center"
     >
-      <span className="flex h-[44px] w-[20px] flex-col items-center justify-around rounded-[7px] border-2 border-white bg-[#0e1c33] py-[3px] shadow-[0_6px_14px_-6px_rgb(11_27_52/0.8)]">
+      <span className="flex h-[44px] w-[20px] flex-col items-center justify-around rounded-[7px] border-2 border-white bg-[#102a47] py-[3px] shadow-[0_6px_14px_-6px_rgb(11_27_52/0.8)]">
         {(['red', 'yellow', 'green'] as const).map((l) => (
           <span
             key={l}
@@ -267,7 +267,7 @@ export function TrafficLightPin({
         ))}
       </span>
       {adaptive && (
-        <span className="mt-1 rounded-full bg-[#0e1c33] px-1.5 py-px text-[9.5px] font-bold uppercase tracking-wide text-white">
+        <span className="mt-1 rounded-full bg-[#102a47] px-1.5 py-px text-[9.5px] font-bold uppercase tracking-wide text-white">
           IA
         </span>
       )}
@@ -286,8 +286,8 @@ export function Callout({
   subtitle?: string;
   children?: ReactNode;
 }) {
-  const border = { blue: '#2563eb', red: '#e5484d', amber: '#f5812a', navy: '#0b1b34' }[tone];
-  const titleColor = { blue: '#0b1b34', red: '#c62a2f', amber: '#b85a10', navy: '#0b1b34' }[tone];
+  const border = { blue: '#1f5fa6', red: '#e5484d', amber: '#f5812a', navy: '#143254' }[tone];
+  const titleColor = { blue: '#143254', red: '#c62a2f', amber: '#b85a10', navy: '#143254' }[tone];
   return (
     <div
       className="pointer-events-none relative w-max max-w-[230px] rounded-[12px] border-[1.5px] bg-white px-3 py-2 shadow-cx-lg"

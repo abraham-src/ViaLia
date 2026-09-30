@@ -2,6 +2,7 @@ import { CloudRain, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { LogoMark } from '../../centro/components/Logo';
 import { useDevices, useWeather } from '../../hooks/queries';
 import { stopLive } from '../../hooks/useLiveSync';
 import { api } from '../../lib/api';
@@ -95,17 +96,27 @@ export function TopBar() {
   };
 
   return (
-    <header className="col-span-2 flex h-10 items-center gap-4 border-b border-line bg-surface px-3">
-      <span className="font-mono text-[13px] font-medium tracking-wide">ViaLia · CDMX</span>
-      <span className="h-4 w-px bg-line" aria-hidden />
-      {isStaff(user) && <DeviceSummary />}
-      <WeatherBadge />
+    <header className="col-span-2 flex h-10 items-center gap-3 border-b border-line bg-surface px-3 md:gap-4">
+      <span className="flex shrink-0 items-center gap-2">
+        <LogoMark size={20} />
+        <span className="whitespace-nowrap font-mono text-[13px] font-medium tracking-wide">
+          ViaLia<span className="hidden sm:inline"> · CDMX</span>
+        </span>
+      </span>
+      <span className="hidden h-4 w-px bg-line md:block" aria-hidden />
+      {/* En pantallas angostas solo quedan marca, estado en vivo y salir. */}
+      <span className="hidden min-w-0 items-center gap-4 lg:flex">
+        {isStaff(user) && <DeviceSummary />}
+        <WeatherBadge />
+      </span>
       <span className="flex-1" />
       <LiveIndicator />
-      <Clock />
+      <span className="hidden sm:inline">
+        <Clock />
+      </span>
       {user && (
         <span className="flex items-center gap-2 border-l border-line pl-3">
-          <span className="text-right leading-tight">
+          <span className="hidden text-right leading-tight md:block">
             <span className="block text-[12px]">{user.name}</span>
             <span className="block text-[10px] uppercase tracking-wider text-fg-muted">
               {ROLE_LABEL[user.role]}

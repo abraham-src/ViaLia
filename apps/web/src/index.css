@@ -1,14 +1,14 @@
 @import 'tailwindcss';
 
-/* SIMU design tokens — control-room palette (spec §7.1). Dark by default. */
+/* ViaLia design tokens. La consola técnica es oscura, sobre el azul marino del logo. */
 @theme {
-  --color-base: #0f1419;
-  --color-surface: #161b22;
-  --color-surface-2: #1c232c;
-  --color-line: #2a3139;
-  --color-fg: #e6edf3;
-  --color-fg-muted: #8b949e;
-  --color-accent: #1f6feb;
+  --color-base: #0a1829;
+  --color-surface: #0f2136;
+  --color-surface-2: #142a44;
+  --color-line: #213b5a;
+  --color-fg: #e8eef6;
+  --color-fg-muted: #93a5bb;
+  --color-accent: #3d7fcf;
   --color-ok: #2ea043;
   --color-warn: #d29922;
   --color-danger: #da3633;
@@ -20,28 +20,37 @@
   --radius-sm: 2px;
   --radius-md: 3px;
 
-  /* Centro de control (/centro): paleta clara del maquetado. Solo la usan las clases cx-*,
-     así que la consola técnica oscura no cambia. */
-  --color-cx-bg: #f1f4f9;
+  /* Marca (logo): azul marino, azul de acción derivado del mismo tono, acero y plata. */
+  --color-brand-navy: #143254;
+  --color-brand-navy2: #1b3d66;
+  --color-brand-blue: #1f5fa6;
+  --color-brand-steel: #6a777f;
+  --color-brand-silver: #b8bbc0;
+
+  /* Centro de control (/centro): tema claro con la paleta de la marca. Solo lo usan las
+     clases cx-*, así que la consola técnica oscura no cambia. */
+  --color-cx-bg: #f2f5f9;
   --color-cx-card: #ffffff;
-  --color-cx-ink: #0b1b34;
-  --color-cx-ink2: #4a5872;
-  --color-cx-ink3: #8591a6;
-  --color-cx-line: #e3e8f0;
-  --color-cx-line2: #eef2f7;
-  --color-cx-navy: #0b1b34;
-  --color-cx-navy2: #13284b;
-  --color-cx-blue: #2563eb;
-  --color-cx-blue2: #1d4ed8;
-  --color-cx-bluesoft: #eaf1ff;
+  --color-cx-ink: #143254;
+  --color-cx-ink2: #465a72;
+  --color-cx-ink3: #6f7f92;
+  --color-cx-line: #e1e7ee;
+  --color-cx-line2: #edf1f6;
+  --color-cx-navy: #143254;
+  --color-cx-navy2: #1b3d66;
+  --color-cx-blue: #1f5fa6;
+  --color-cx-blue2: #174b86;
+  --color-cx-bluesoft: #e8f0f9;
+  --color-cx-steel: #6a777f;
+  --color-cx-silver: #b8bbc0;
   --color-cx-critical: #e5484d;
   --color-cx-high: #f5812a;
   --color-cx-medium: #eeb000;
   --color-cx-low: #3b9cf0;
   --color-cx-ok: #1fa464;
   --font-display: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --shadow-cx: 0 1px 2px rgb(16 24 40 / 0.04), 0 12px 32px -18px rgb(16 24 40 / 0.22);
-  --shadow-cx-lg: 0 2px 6px rgb(16 24 40 / 0.06), 0 24px 48px -20px rgb(16 24 40 / 0.3);
+  --shadow-cx: 0 1px 2px rgb(20 50 84 / 0.05), 0 12px 32px -18px rgb(20 50 84 / 0.28);
+  --shadow-cx-lg: 0 2px 6px rgb(20 50 84 / 0.07), 0 24px 48px -20px rgb(20 50 84 / 0.36);
 
   /* Subtle entry for live items (spec §7.4: fade in, no exaggerated slides). */
   --animate-fade-in: fade-in 400ms ease-out;
@@ -137,7 +146,7 @@
   border-color: color-mix(in srgb, var(--color-critical) 60%, transparent);
 }
 .simu-chip-accent {
-  color: #58a6ff;
+  color: #7fb0e6;
   border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 .simu-chip-neutral {

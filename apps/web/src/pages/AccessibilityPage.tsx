@@ -275,7 +275,7 @@ export function AccessibilityPage() {
               role="switch"
               checked={accessible}
               onChange={(e) => setAccessible(e.target.checked)}
-              className="size-4 accent-[#1f6feb]"
+              className="size-4 accent-[#3d7fcf]"
             />
           </label>
           <button

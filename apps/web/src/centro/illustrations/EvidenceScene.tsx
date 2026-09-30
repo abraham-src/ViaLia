@@ -248,7 +248,7 @@ function DrainScene({
         <g transform="translate(150 40) rotate(-18)">
           <rect width="78" height="26" rx="12" fill="#cfe4f6" opacity="0.92" />
           <rect x="6" y="6" width="44" height="14" rx="6" fill="#7fb2dc" opacity="0.8" />
-          <rect x="78" y="7" width="12" height="12" rx="3" fill="#2563eb" />
+          <rect x="78" y="7" width="12" height="12" rx="3" fill="#1f5fa6" />
           <rect x="8" y="4" width="60" height="4" rx="2" fill="#fff" opacity="0.7" />
         </g>
         <path d="M60 30l26-10 20 14-8 22-30 4-14-16z" fill="#e5484d" />
@@ -486,7 +486,7 @@ function RoadObject({ kind }: { kind: Exclude<SceneKind, 'drain' | 'water'> }) {
             </g>
           ))}
           <g transform="translate(380 150)">
-            <circle r="34" fill="#2563eb" stroke="#fff" strokeWidth="4" />
+            <circle r="34" fill="#1f5fa6" stroke="#fff" strokeWidth="4" />
             <circle cx="-2" cy="-16" r="5" fill="#fff" />
             <path
               d="M-4-8v14h14l6 12M-10 0a14 14 0 1 0 18 16"
@@ -560,7 +560,7 @@ export function EvidenceScene({
             h={BOX[kind][3]}
             label={label}
             confidence={confidence}
-            color={kind === 'accessibility' ? '#2563eb' : '#ef3b40'}
+            color={kind === 'accessibility' ? '#1f5fa6' : '#ef3b40'}
           />
         </>
       )}

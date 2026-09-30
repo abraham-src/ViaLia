@@ -47,7 +47,7 @@ const PHASE_TEXT = {
 } as const;
 
 const DECISION_COLOR: Record<Decision['kind'], string> = {
-  extend: '#2563eb',
+  extend: '#1f5fa6',
   switch: '#0ea5e9',
   gap: '#0ea5e9',
   max: '#f5812a',
@@ -83,7 +83,7 @@ function DemandCard() {
                 </span>
               </div>
               <div className="mt-1.5">
-                <Meter value={(q / max) * 100} color={flag ? '#f5812a' : '#2563eb'} height={7} />
+                <Meter value={(q / max) * 100} color={flag ? '#f5812a' : '#1f5fa6'} height={7} />
               </div>
               {flag && (
                 <div className="mt-1 text-[11.5px] font-medium text-[#b85a10]">{flag.reason}</div>
@@ -302,7 +302,7 @@ function ComparisonCard() {
         </Button>
       }
     >
-      <div className="grid grid-cols-[250px_minmax(0,1fr)] gap-7">
+      <div className="grid grid-cols-1 gap-7 md:grid-cols-[250px_minmax(0,1fr)]">
         <div>
           <div className="text-[12.5px] font-medium text-cx-ink3">Espera promedio por vehículo</div>
           <div
@@ -373,12 +373,12 @@ export function IntersectionPage() {
         <TopActions search={false} />
       </PageHeader>
 
-      <div className="grid grid-cols-[minmax(0,1fr)_360px] items-start gap-5 px-7 pb-8">
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_360px] px-4 sm:px-7 pb-8">
         <div className="flex min-w-0 flex-col gap-5">
           <section className="relative overflow-hidden rounded-[22px] border border-cx-line bg-[#e3e8ef] shadow-cx">
             <IntersectionMap
               center={INTERSECTION_CENTER}
-              className="h-[calc(100vh-150px)] min-h-[560px] w-full"
+              className="h-[62vh] min-h-[400px] w-full xl:h-[calc(100vh-150px)] xl:min-h-[560px]"
             />
             <div className="absolute left-4 top-4 flex flex-col gap-2">
               <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-[12.5px] font-bold text-cx-ink shadow-cx">

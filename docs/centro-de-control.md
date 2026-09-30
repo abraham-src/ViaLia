@@ -51,6 +51,24 @@ presentar como medición algo que es simulación, como pide la memoria técnica.
 
 Edita `apps/web/src/centro/brand.ts`. El nombre, el lema y la ciudad salen de ahí.
 
+## Colores de la marca
+
+Salen del logo (`docs/brand/vialia-logo.jpg`, símbolo en `apps/web/public/vialia-mark.svg`) y
+viven como tokens en `apps/web/src/index.css`:
+
+| Token                               | Color     | Uso                                                |
+| ----------------------------------- | --------- | -------------------------------------------------- |
+| `brand-navy` / `cx-navy` / `cx-ink` | `#143254` | Barra lateral, texto principal, botones sólidos    |
+| `brand-blue` / `cx-blue`            | `#1f5fa6` | Íconos, enlaces y controles (mismo tono, más vivo) |
+| `brand-steel` / `cx-steel`          | `#6a777f` | Etiquetas secundarias                              |
+| `brand-silver` / `cx-silver`        | `#b8bbc0` | Acentos y estados neutros                          |
+
+La consola técnica usa la versión oscura de la misma paleta (`base`, `surface`, `line`). Los
+colores de estado (crítico, alto, medio, en línea) no cambian: comunican significado, no marca.
+
+Todas las vistas del centro y el acceso se adaptan a celular: por debajo de 1024 px la barra
+lateral se vuelve un menú deslizable y las columnas se apilan.
+
 ## Mapas: 2D, 3D y tráfico en tiempo real
 
 Todos los mapas (centro de control y consola técnica, incluido el minimapa del zoom y el cruce

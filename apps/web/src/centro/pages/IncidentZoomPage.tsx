@@ -171,7 +171,7 @@ export function IncidentZoomPage() {
     const rings: Feature[] = [circle(ctx.point, 22, { color, fillOpacity: 0.12, lineWidth: 2 })];
     if (toggles.radius) {
       rings.push(
-        circle(ctx.point, CORRELATION_M, { color: '#2563eb', fillOpacity: 0.035, lineWidth: 1.6 }),
+        circle(ctx.point, CORRELATION_M, { color: '#1f5fa6', fillOpacity: 0.035, lineWidth: 1.6 }),
       );
     }
     const cones = toggles.cameras
@@ -180,7 +180,7 @@ export function IncidentZoomPage() {
             distanceM(lngLatOf(c), ctx.point) > 4
               ? bearingDeg(lngLatOf(c), ctx.point)
               : cameraHeading(c, data.devices, data.incidents);
-          return cone(lngLatOf(c), heading, 56, 90, { color: '#2563eb', fillOpacity: 0.2 });
+          return cone(lngLatOf(c), heading, 56, 90, { color: '#1f5fa6', fillOpacity: 0.2 });
         })
       : [];
     const areas: Feature[] = (data.flood?.features ?? [])
@@ -210,7 +210,7 @@ export function IncidentZoomPage() {
         >
           <TopActions />
         </PageHeader>
-        <div className="px-7">
+        <div className="px-4 sm:px-7">
           <Card>
             <Empty>
               {loading
@@ -231,7 +231,7 @@ export function IncidentZoomPage() {
   const now = Date.now() / 1000;
 
   return (
-    <div className="flex h-full min-h-[720px] flex-col">
+    <div className="flex min-h-full flex-col xl:h-full xl:min-h-[720px]">
       <PageHeader title="Zoom de incidencia" subtitle="Vista detallada del área con la incidencia">
         <Breadcrumb
           items={[
@@ -243,21 +243,21 @@ export function IncidentZoomPage() {
         <IncidentSwitcher data={data} current={incident} />
         <TopActions search={false} />
       </PageHeader>
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_340px] gap-5 px-7 pb-6">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_340px] px-4 sm:px-7 pb-6">
         <CxMap
           view={view}
           viewKey={incident.id}
           overlays={overlays}
-          className="h-full min-h-[560px] rounded-[22px] border border-cx-line shadow-cx"
+          className="h-[62vh] min-h-[380px] rounded-[22px] xl:h-full xl:min-h-[560px] border border-cx-line shadow-cx"
           chrome={
             <>
-              <div className="absolute left-4 top-4">
+              <div className="absolute left-4 top-4 hidden sm:block">
                 <ZoomPanel toggles={toggles} set={setToggles} />
               </div>
               <div className="absolute bottom-4 left-4">
                 <MapControls home={view} />
               </div>
-              <div className="absolute right-4 top-4 rounded-[14px] border border-white/70 bg-white/95 px-3.5 py-2.5 shadow-cx-lg backdrop-blur">
+              <div className="absolute right-4 top-4 hidden rounded-[14px] border sm:block border-white/70 bg-white/95 px-3.5 py-2.5 shadow-cx-lg backdrop-blur">
                 <div className="text-[11px] font-bold uppercase tracking-[0.12em] text-cx-ink3">
                   Radio de la regla
                 </div>
@@ -347,7 +347,7 @@ export function IncidentZoomPage() {
                 color={color}
                 marks={
                   ctx.camera && ctx.camera.distance < 200
-                    ? [{ at: lngLatOf(ctx.camera.item), color: '#2563eb' }]
+                    ? [{ at: lngLatOf(ctx.camera.item), color: '#1f5fa6' }]
                     : []
                 }
                 className="block aspect-[320/190] w-full"

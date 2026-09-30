@@ -53,7 +53,7 @@ test('2 · Coladera obstruyéndose: 42 → 71 → 88 % y ALERTA', async ({ page 
 test('3 · Cámara detecta un obstáculo y aparece como incidencia en vivo', async ({ page }) => {
   await loginAs(page, 'operador');
   await page.getByRole('navigation').getByRole('link', { name: 'Incidencias' }).click();
-  await expect(page).toHaveTitle('SIMU · Incidencias');
+  await expect(page).toHaveTitle('ViaLia · Incidencias');
   const timeline = await openTimeline(page);
 
   await simulator('scenario/3');

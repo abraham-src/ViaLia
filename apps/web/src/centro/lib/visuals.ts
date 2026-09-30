@@ -38,8 +38,8 @@ export const PRIORITY_TEXT: Record<IncidentPriority, string> = {
 };
 
 export const OK_COLOR = '#1fa464';
-export const BLUE = '#2563eb';
-export const NAVY = '#0b1b34';
+export const BLUE = '#1f5fa6';
+export const NAVY = '#143254';
 
 export const DRAIN_COLOR: Record<DrainStatus, string> = {
   normal: OK_COLOR,

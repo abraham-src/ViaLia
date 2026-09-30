@@ -11,10 +11,10 @@ import type { Comparison, RunResult } from '../sim/intersection';
 
 export const SERIES = {
   fixed: { label: 'Ciclo fijo', color: '#7d8aa0' },
-  adaptive: { label: 'Adaptativo', color: '#2563eb' },
+  adaptive: { label: 'Adaptativo', color: '#1f5fa6' },
 } as const;
 
-const INK = '#0b1b34';
+const INK = '#143254';
 const MUTED = '#8591a6';
 const GRID = '#e6ebf2';
 const BASE = '#c9d2de';
@@ -317,8 +317,8 @@ export function RiskCurve({
       >
         <defs>
           <linearGradient id={`${gid}-a`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#2563eb" stopOpacity="0.16" />
-            <stop offset="1" stopColor="#2563eb" stopOpacity="0.02" />
+            <stop offset="0" stopColor="#1f5fa6" stopOpacity="0.16" />
+            <stop offset="1" stopColor="#1f5fa6" stopOpacity="0.02" />
           </linearGradient>
         </defs>
         {[0, 0.25, 0.5, 0.75, 1].map((p) => (
@@ -368,7 +368,7 @@ export function RiskCurve({
         <path
           d={line}
           fill="none"
-          stroke="#2563eb"
+          stroke="#1f5fa6"
           strokeWidth="2"
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -385,7 +385,7 @@ export function RiskCurve({
         />
         {at && (
           <g>
-            <circle cx={x(at.t)} cy={y(at.p)} r="5" fill="#2563eb" stroke="#fff" strokeWidth="2" />
+            <circle cx={x(at.t)} cy={y(at.p)} r="5" fill="#1f5fa6" stroke="#fff" strokeWidth="2" />
             <text
               x={x(at.t) + 9}
               y={at.p > 0.85 ? y(at.p) + 20 : y(at.p) - 9}

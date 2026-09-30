@@ -41,7 +41,7 @@ type Status = 'real' | 'sim' | 'pending';
 
 const STATUS: Record<Status, { label: string; color: string; icon: IconType }> = {
   real: { label: 'Funciona con la API', color: '#1fa464', icon: CircleCheck },
-  sim: { label: 'Simulado', color: '#2563eb', icon: CircleDot },
+  sim: { label: 'Simulado', color: '#1f5fa6', icon: CircleDot },
   pending: { label: 'Pendiente', color: '#8591a6', icon: CircleDashed },
 };
 
@@ -135,21 +135,21 @@ function Node({
 
 function Flow() {
   return (
-    <div className="flex items-center justify-center" aria-hidden>
-      <svg width="44" height="24" viewBox="0 0 44 24">
+    <div className="flex items-center justify-center py-1 lg:py-0" aria-hidden>
+      <svg width="44" height="24" viewBox="0 0 44 24" className="rotate-90 lg:rotate-0">
         <line
           x1="2"
           y1="12"
           x2="34"
           y2="12"
-          stroke="#2563eb"
+          stroke="#1f5fa6"
           strokeWidth="2.5"
           className="cx-flow"
         />
         <path
           d="M32 5l9 7-9 7"
           fill="none"
-          stroke="#2563eb"
+          stroke="#1f5fa6"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -250,8 +250,8 @@ export function ProjectPage() {
         <TopActions search={false} />
       </PageHeader>
 
-      <div className="flex flex-col gap-6 px-7 pb-10">
-        <section className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0c1d38] via-[#12305e] to-[#1d4ed8] px-8 py-7 text-white shadow-cx-lg">
+      <div className="flex flex-col gap-6 px-4 sm:px-7 pb-10">
+        <section className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#183b63] via-[#12305e] to-[#174b86] px-8 py-7 text-white shadow-cx-lg">
           <svg
             className="pointer-events-none absolute -right-10 -top-10 h-[260px] w-[420px] opacity-25"
             viewBox="0 0 420 260"
@@ -283,19 +283,19 @@ export function ProjectPage() {
             <circle cx="260" cy="120" r="26" fill="none" stroke="#fbbf24" strokeWidth="2" />
           </svg>
           <div className="relative max-w-[760px]">
-            <Pill color="#bfdbfe" soft="rgb(255 255 255 / 0.12)">
+            <Pill color="#c3d6ec" soft="rgb(255 255 255 / 0.12)">
               <Sparkles size={13} /> {BRAND.name} {BRAND.tagline}
             </Pill>
             <h2 className="mt-3 text-[28px] font-extrabold leading-tight tracking-[-0.02em]">
               Una red inteligente que observa las calles, anticipa problemas y adapta la movilidad
               antes y durante una incidencia.
             </h2>
-            <p className="mt-2 text-[14.5px] text-[#c7d7f5]">
+            <p className="mt-2 text-[14.5px] text-[#c6d5e8]">
               No es otra tecnología aislada: es cerrar el ciclo completo en una intersección real de
               la {BRAND.city}, con los datos que ya produce el sistema.
             </p>
           </div>
-          <div className="relative mt-6 grid max-w-[760px] grid-cols-3 gap-3">
+          <div className="relative mt-6 grid max-w-[760px] grid-cols-1 gap-3 sm:grid-cols-3">
             {[
               [`${online}/${data.devices.length || '—'}`, 'dispositivos en línea'],
               [`${data.incidents.length}`, 'incidencias activas'],
@@ -306,7 +306,7 @@ export function ProjectPage() {
             ].map(([v, k]) => (
               <div key={k} className="rounded-[16px] bg-white/10 px-4 py-3 backdrop-blur">
                 <div className="text-[26px] font-extrabold leading-none">{v}</div>
-                <div className="mt-1 text-[12.5px] text-[#c7d7f5]">{k}</div>
+                <div className="mt-1 text-[12.5px] text-[#c6d5e8]">{k}</div>
               </div>
             ))}
           </div>
@@ -321,7 +321,7 @@ export function ProjectPage() {
             metric={`${data.cameras.length} cámaras · ${data.drains.length} coladeras`}
             detail={`${data.lights.length} semáforos y 1 gateway con respaldo sin Internet`}
             to="/centro"
-            color="#2563eb"
+            color="#1f5fa6"
           />
           <Stage
             n={2}
@@ -391,7 +391,7 @@ export function ProjectPage() {
             </div>
           }
         >
-          <div className="grid grid-cols-[minmax(0,1fr)_44px_minmax(0,1fr)_44px_minmax(0,1fr)_44px_minmax(0,1fr)] items-stretch">
+          <div className="grid grid-cols-1 items-stretch gap-1 lg:grid-cols-[minmax(0,1fr)_44px_minmax(0,1fr)_44px_minmax(0,1fr)_44px_minmax(0,1fr)] lg:gap-0">
             <div className="flex min-w-0 flex-col gap-2">
               <div className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-cx-ink3">
                 Campo

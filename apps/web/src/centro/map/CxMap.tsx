@@ -64,7 +64,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     type: 'fill',
     source: 'cx-areas',
     paint: {
-      'fill-color': ['coalesce', ['get', 'fill'], '#2563eb'],
+      'fill-color': ['coalesce', ['get', 'fill'], '#1f5fa6'],
       'fill-opacity': ['coalesce', ['get', 'fillOpacity'], 0.12],
     },
   },
@@ -74,7 +74,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     source: 'cx-areas',
     filter: ['!=', ['get', 'dashed'], true],
     paint: {
-      'line-color': ['coalesce', ['get', 'line'], ['get', 'fill'], '#2563eb'],
+      'line-color': ['coalesce', ['get', 'line'], ['get', 'fill'], '#1f5fa6'],
       'line-width': ['coalesce', ['get', 'lineWidth'], 1.5],
       'line-opacity': 0.85,
     },
@@ -85,7 +85,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     source: 'cx-areas',
     filter: ['==', ['get', 'dashed'], true],
     paint: {
-      'line-color': ['coalesce', ['get', 'line'], ['get', 'fill'], '#2563eb'],
+      'line-color': ['coalesce', ['get', 'line'], ['get', 'fill'], '#1f5fa6'],
       'line-width': ['coalesce', ['get', 'lineWidth'], 1.5],
       'line-dasharray': [2, 2],
       'line-opacity': 0.9,
@@ -97,7 +97,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     source: 'cx-lines',
     layout: { 'line-cap': 'round', 'line-join': 'round' },
     paint: {
-      'line-color': ['coalesce', ['get', 'color'], '#2563eb'],
+      'line-color': ['coalesce', ['get', 'color'], '#1f5fa6'],
       'line-width': ['coalesce', ['get', 'width'], 4],
       'line-opacity': 0.9,
     },
@@ -107,7 +107,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     type: 'fill',
     source: 'cx-cones',
     paint: {
-      'fill-color': ['coalesce', ['get', 'color'], '#2563eb'],
+      'fill-color': ['coalesce', ['get', 'color'], '#1f5fa6'],
       'fill-opacity': ['coalesce', ['get', 'fillOpacity'], 0.2],
     },
   },
@@ -116,7 +116,7 @@ const OVERLAY_LAYERS: LayerSpecification[] = [
     type: 'line',
     source: 'cx-cones',
     paint: {
-      'line-color': ['coalesce', ['get', 'color'], '#2563eb'],
+      'line-color': ['coalesce', ['get', 'color'], '#1f5fa6'],
       'line-width': 1.2,
       'line-opacity': 0.55,
     },

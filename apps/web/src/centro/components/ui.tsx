@@ -24,7 +24,7 @@ export function Card({
   return (
     <section className={`rounded-[20px] border border-cx-line bg-white shadow-cx ${className}`}>
       {(title || action) && (
-        <header className="flex items-center gap-2 px-5 pt-4">
+        <header className="flex flex-wrap items-center gap-x-2 gap-y-2 px-5 pt-4">
           {Icon && <Icon size={17} strokeWidth={2.2} className="text-cx-blue" aria-hidden />}
           <h2 className="text-[15.5px] font-bold tracking-[-0.01em] text-cx-ink">{title}</h2>
           <div className="ml-auto flex items-center gap-2">{action}</div>
@@ -39,7 +39,7 @@ export function Card({
 
 export function Pill({
   children,
-  color = '#2563eb',
+  color = '#1f5fa6',
   soft,
   className = '',
 }: {
@@ -87,7 +87,7 @@ export function PriorityPill({
 export function StatusPill({ status }: { status: IncidentStatus }) {
   const tone: Record<IncidentStatus, string> = {
     pending: '#8a5a00',
-    validated: '#2563eb',
+    validated: '#1f5fa6',
     assigned: '#6d28d9',
     in_progress: '#c2410c',
     resolved: '#15803d',
@@ -116,7 +116,7 @@ export function DeviceStatusPill({ status }: { status: DeviceStatus }) {
 
 export function IconBubble({
   icon: Icon,
-  color = '#2563eb',
+  color = '#1f5fa6',
   size = 36,
   solid = false,
 }: {
@@ -147,9 +147,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const VARIANT: Record<NonNullable<ButtonProps['variant']>, string> = {
   primary:
-    'bg-cx-blue text-white shadow-[0_10px_24px_-12px_rgb(37_99_235/0.9)] hover:bg-cx-blue2 disabled:bg-cx-blue/50',
+    'bg-cx-blue text-white shadow-[0_10px_24px_-12px_rgb(31_95_166/0.9)] hover:bg-cx-blue2 disabled:bg-cx-blue/50',
   ghost: 'border border-cx-line bg-white text-cx-ink hover:border-cx-blue/40 hover:text-cx-blue',
-  soft: 'bg-cx-bluesoft text-cx-blue hover:bg-[#dce8ff]',
+  soft: 'bg-cx-bluesoft text-cx-blue hover:bg-[#d6e4f3]',
   danger: 'border border-[#f3c7c9] bg-white text-[#c62a2f] hover:bg-[#fff5f5]',
 };
 
@@ -288,7 +288,7 @@ export function InfoRow({
 
 export function Meter({
   value,
-  color = '#2563eb',
+  color = '#1f5fa6',
   height = 8,
 }: {
   value: number;
@@ -315,14 +315,16 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="flex flex-wrap items-end gap-x-6 gap-y-3 px-7 pb-4 pt-6">
+    <header className="flex flex-wrap items-end gap-x-6 gap-y-3 px-4 pb-4 pt-5 sm:px-7 sm:pt-6">
       <div className="min-w-0">
-        <h1 className="text-[30px] font-extrabold leading-[1.1] tracking-[-0.025em] text-cx-ink">
+        <h1 className="text-[24px] font-extrabold leading-[1.1] tracking-[-0.025em] text-cx-ink sm:text-[30px]">
           {title}
         </h1>
-        {subtitle && <p className="mt-1 text-[15px] text-cx-ink3">{subtitle}</p>}
+        {subtitle && <p className="mt-1 text-[14px] text-cx-ink3 sm:text-[15px]">{subtitle}</p>}
       </div>
-      <div className="ml-auto flex flex-wrap items-center gap-3">{children}</div>
+      <div className="flex w-full flex-wrap items-center gap-3 sm:ml-auto sm:w-auto">
+        {children}
+      </div>
     </header>
   );
 }

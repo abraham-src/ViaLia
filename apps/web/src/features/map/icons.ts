@@ -11,7 +11,7 @@ export const COLORS = {
   warn: '#d29922',
   danger: '#da3633',
   critical: '#f85149',
-  accent: '#1f6feb',
+  accent: '#3d7fcf',
   muted: '#8b949e',
   maintenance: '#6e7681',
   base: '#0f1419',

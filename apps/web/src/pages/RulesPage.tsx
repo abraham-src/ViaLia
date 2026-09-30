@@ -273,7 +273,7 @@ function RuleEditor({ initial, onClose }: { initial: Draft; onClose: () => void 
                 type="checkbox"
                 checked={d.enabled}
                 onChange={(e) => set('enabled', e.target.checked)}
-                className="accent-[#1f6feb]"
+                className="accent-[#3d7fcf]"
               />
               Activa
             </label>
@@ -364,7 +364,7 @@ function RuleEditor({ initial, onClose }: { initial: Draft; onClose: () => void 
                 type="checkbox"
                 checked={d.emit_alert}
                 onChange={(e) => set('emit_alert', e.target.checked)}
-                className="accent-[#1f6feb]"
+                className="accent-[#3d7fcf]"
               />
               Emitir alerta en tiempo real
             </label>
@@ -509,7 +509,7 @@ export function RulesPage() {
                               onChange={(e) =>
                                 save.mutate({ id: r.id, input: { enabled: e.target.checked } })
                               }
-                              className="accent-[#1f6feb]"
+                              className="accent-[#3d7fcf]"
                               aria-label={`Regla ${r.name} activa`}
                             />
                             {r.enabled ? 'Activa' : 'Inactiva'}

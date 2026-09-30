@@ -16,7 +16,7 @@ export type Tone = 'neutral' | 'accent' | 'ok' | 'warn' | 'danger' | 'critical';
 /** Full class names (Tailwind scans literal strings). Color never travels without a label. */
 const TONE: Record<Tone, { chip: string; dot: string }> = {
   neutral: { chip: 'border-line text-fg-muted', dot: 'bg-fg-muted' },
-  accent: { chip: 'border-accent/50 text-[#58a6ff]', dot: 'bg-accent' },
+  accent: { chip: 'border-accent/50 text-[#7fb0e6]', dot: 'bg-accent' },
   ok: { chip: 'border-ok/50 text-ok', dot: 'bg-ok' },
   warn: { chip: 'border-warn/50 text-warn', dot: 'bg-warn' },
   danger: { chip: 'border-danger/60 text-critical', dot: 'bg-danger' },
