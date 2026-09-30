@@ -150,6 +150,16 @@ Si agregas un valor a un enum, actualiza también `packages/shared-types/src/enu
 - Antes de abrir un PR: `npm run typecheck && npm run lint && npm test`.
 - El PR describe qué cambia, cómo se probó y si requiere `docker compose down -v`, por ejemplo cuando cambian los seeds.
 
+### Mantener tu copia al día (`npm run sync`)
+
+Con los servidores de desarrollo corriendo, abre otra terminal y ejecuta `npm run sync`. Cada
+20 s revisa `origin/main` y trae los commits nuevos de los colaboradores. Vite, la API y el
+simulador recargan solos; si cambió `package.json`, la base de datos o los paquetes
+compartidos, el script corre `npm install`, las migraciones o el build.
+
+No toca tu trabajo: si tienes cambios sin commit, o tu rama y la remota divergieron, solo avisa
+y espera. El intervalo se cambia con `SYNC_INTERVAL_S` (por ejemplo `SYNC_INTERVAL_S=60`).
+
 ## Reiniciar datos
 
 ```bash
