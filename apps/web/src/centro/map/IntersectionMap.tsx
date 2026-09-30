@@ -262,7 +262,7 @@ const LAMP: Record<'red' | 'yellow' | 'green', string> = {
 function SignalHead({ lamp, label }: { lamp: 'red' | 'yellow' | 'green'; label: string }) {
   return (
     <div className="flex flex-col items-center gap-0.5" title={`Semáforo acceso ${label}`}>
-      <div className="flex flex-col gap-[3px] rounded-[7px] border-2 border-white bg-[#0e1c33] px-[4px] py-[4px] shadow-cx">
+      <div className="flex flex-col gap-[3px] rounded-[7px] border-2 border-white bg-[#102a47] px-[4px] py-[4px] shadow-cx">
         {(['red', 'yellow', 'green'] as const).map((l) => (
           <span
             key={l}
@@ -282,7 +282,7 @@ function PedSignal({ sig }: { sig: 'walk' | 'flash' | 'dont' }) {
   const color = sig === 'walk' ? '#22c55e' : '#ef4444';
   return (
     <span
-      className={`grid size-6 place-items-center rounded-[6px] border-[1.5px] border-white bg-[#0e1c33] text-[12px] shadow-cx ${sig === 'flash' ? 'cx-blink' : ''}`}
+      className={`grid size-6 place-items-center rounded-[6px] border-[1.5px] border-white bg-[#102a47] text-[12px] shadow-cx ${sig === 'flash' ? 'cx-blink' : ''}`}
       style={{ color }}
       title={
         sig === 'walk'
@@ -356,7 +356,7 @@ export function IntersectionMap({
     }));
     const cones = [
       cone(cameraPoint(center), ARM_BEARING.S + 20, 80, 34, {
-        color: '#2563eb',
+        color: '#1f5fa6',
         fillOpacity: 0.12,
       }),
     ];
@@ -401,7 +401,7 @@ export function IntersectionMap({
           >
             <span
               className="whitespace-nowrap rounded-full px-2.5 py-0.5 text-[12px] font-extrabold text-white shadow-cx"
-              style={{ background: flagged ? '#f5812a' : '#0e1c33' }}
+              style={{ background: flagged ? '#f5812a' : '#102a47' }}
               title={flagged ? `${APPROACH_LABEL[a]}: flujo limitado` : APPROACH_LABEL[a]}
             >
               {a === 'E' ? 'O' : a === 'W' ? 'P' : a} · {queueLen(sim, a)}
@@ -419,7 +419,7 @@ export function IntersectionMap({
       )}
       <MapMarker lngLat={camAt} z={19}>
         <span
-          className="grid size-8 place-items-center rounded-full border-[3px] border-white bg-[#2563eb] text-white shadow-cx"
+          className="grid size-8 place-items-center rounded-full border-[3px] border-white bg-[#1f5fa6] text-white shadow-cx"
           title="Cámara IA de conteo"
         >
           <svg width="14" height="14" viewBox="-8 -6 16 12" aria-hidden>

@@ -194,7 +194,7 @@ function ScenarioCard() {
           step={2}
           value={s.rainPeak}
           onChange={(e) => setRain(Number(e.target.value))}
-          className="mt-2 w-full accent-[#2563eb]"
+          className="mt-2 w-full accent-[#1f5fa6]"
         />
         <div className="mt-2 flex items-center justify-between gap-2">
           <span className="text-[12.5px] text-cx-ink3">Pico en</span>
@@ -294,9 +294,9 @@ export function PredictionPage() {
       areas.push({
         ...f,
         properties: {
-          fill: '#0b1b34',
+          fill: '#143254',
           fillOpacity: 0.06,
-          line: '#0b1b34',
+          line: '#143254',
           lineWidth: 1.2,
           dashed: true,
         },
@@ -323,12 +323,12 @@ export function PredictionPage() {
         <TopActions search={false} />
       </PageHeader>
 
-      <div className="grid grid-cols-[minmax(0,1fr)_380px] items-start gap-5 px-7 pb-8">
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_380px] px-4 sm:px-7 pb-8">
         <div className="flex min-w-0 flex-col gap-5">
           <CxMap
             view={CITY_VIEW}
             overlays={overlays}
-            className="h-[520px] rounded-[22px] border border-cx-line shadow-cx"
+            className="h-[380px] rounded-[22px] sm:h-[520px] border border-cx-line shadow-cx"
             chrome={
               <>
                 <div className="absolute right-4 top-4">
@@ -411,7 +411,7 @@ export function PredictionPage() {
                 active && base ? (
                   <Legend
                     items={[
-                      { label: 'Con escenario', color: '#2563eb', kind: 'line' },
+                      { label: 'Con escenario', color: '#1f5fa6', kind: 'line' },
                       { label: 'Sin escenario', color: '#7d8aa0', kind: 'line' },
                     ]}
                   />

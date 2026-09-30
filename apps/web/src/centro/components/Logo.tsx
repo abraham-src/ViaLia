@@ -14,7 +14,7 @@ export function Logo() {
       <LogoMark />
       <div className="leading-tight">
         <div className="text-[18px] font-extrabold tracking-[-0.02em] text-white">{BRAND.name}</div>
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-[#93a4c3]">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-[#aebccd]">
           {BRAND.tagline}
         </div>
       </div>

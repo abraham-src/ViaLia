@@ -121,7 +121,7 @@ function EvidenceCard({
     ? (incident.metadata.facts as Record<string, unknown>)['weather.raining'] === true
     : data.weather?.raining === true;
   return (
-    <div className="relative overflow-hidden rounded-[22px] border border-cx-line bg-[#0b1b34] shadow-cx">
+    <div className="relative overflow-hidden rounded-[22px] border border-cx-line bg-[#143254] shadow-cx">
       {stream ? (
         <img src={stream} alt="Video en vivo" className="aspect-[16/10] w-full object-cover" />
       ) : (
@@ -444,7 +444,7 @@ function MobilityCard({ data, incident }: { data: CxData; incident: IncidentDto 
         </p>
       )}
       <div className="mt-3 flex items-center justify-between">
-        <Pill color={usesFixedPlan(sim) ? '#64748b' : '#2563eb'}>
+        <Pill color={usesFixedPlan(sim) ? '#64748b' : '#1f5fa6'}>
           {usesFixedPlan(sim) ? 'Plan fijo' : 'Control adaptativo'}
         </Pill>
         <Link
@@ -519,7 +519,7 @@ export function IncidentDetailPage() {
         <PageHeader title="Vista de detalle" subtitle="Información y evidencia de la incidencia">
           <TopActions />
         </PageHeader>
-        <div className="px-7">
+        <div className="px-4 sm:px-7">
           <Card>
             <Empty>{loading ? 'Cargando…' : 'No se encontró la incidencia.'}</Empty>
           </Card>
@@ -547,7 +547,7 @@ export function IncidentDetailPage() {
         <TopActions search={false} />
       </PageHeader>
 
-      <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(360px,1fr)] gap-5 px-7 pb-8">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(360px,1fr)] px-4 sm:px-7 pb-8">
         <div className="flex min-w-0 flex-col gap-5">
           <EvidenceCard incident={incident} data={data} address={ctx.address} />
           <FusionCard incident={incident} data={data} />
@@ -600,18 +600,18 @@ export function IncidentDetailPage() {
             </div>
           </section>
 
-          <section className="rounded-[20px] border border-[#d6e4ff] bg-gradient-to-br from-[#f3f7ff] to-[#eaf1ff] p-5 shadow-cx">
+          <section className="rounded-[20px] border border-[#d6e4ff] bg-gradient-to-br from-[#f3f7ff] to-[#e8f0f9] p-5 shadow-cx">
             <div className="flex items-center gap-2 text-[15.5px] font-bold text-cx-ink">
               <Bot size={18} strokeWidth={2.2} className="text-cx-blue" /> Datos de la IA
             </div>
-            <div className="mt-3 grid grid-cols-[1fr_1.25fr] gap-5">
+            <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-[1fr_1.25fr]">
               <div>
                 <div className="text-[12.5px] font-medium text-cx-ink3">Confianza de detección</div>
                 <div className="cx-tabular mt-1 text-[30px] font-extrabold leading-none tracking-tight text-cx-ink">
                   {confidence} %
                 </div>
                 <div className="mt-2.5">
-                  <Meter value={confidence} color="#2563eb" height={9} />
+                  <Meter value={confidence} color="#1f5fa6" height={9} />
                 </div>
               </div>
               <div>

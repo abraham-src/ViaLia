@@ -7,10 +7,10 @@ export function PerceiveArt() {
     <svg viewBox="0 0 160 96" className="h-full w-full" aria-hidden>
       <rect width="160" height="96" rx="14" fill={BG} />
       <g transform="translate(22 20)">
-        <rect x="0" y="8" width="44" height="28" rx="7" fill="#13284b" />
-        <circle cx="22" cy="22" r="9" fill="#2563eb" />
-        <circle cx="22" cy="22" r="4" fill="#bfdbfe" />
-        <rect x="44" y="16" width="10" height="12" rx="3" fill="#13284b" />
+        <rect x="0" y="8" width="44" height="28" rx="7" fill="#1b3d66" />
+        <circle cx="22" cy="22" r="9" fill="#1f5fa6" />
+        <circle cx="22" cy="22" r="4" fill="#c3d6ec" />
+        <rect x="44" y="16" width="10" height="12" rx="3" fill="#1b3d66" />
         <rect x="16" y="36" width="12" height="18" rx="3" fill="#94a3b8" />
         <path
           d="M-4 4h10M-4 4v10M50 4h10M60 4v10"
@@ -26,7 +26,7 @@ export function PerceiveArt() {
         ))}
         <path
           d="M8 4a16 16 0 0 1 24 0M13 -2a24 24 0 0 1 14 0"
-          stroke="#2563eb"
+          stroke="#1f5fa6"
           strokeWidth="2.5"
           fill="none"
           strokeLinecap="round"
@@ -41,7 +41,7 @@ export function UnderstandArt() {
     <svg viewBox="0 0 160 96" className="h-full w-full" aria-hidden>
       <rect width="160" height="96" rx="14" fill={BG} />
       {[
-        [26, 24, '#2563eb'],
+        [26, 24, '#1f5fa6'],
         [26, 48, '#0ea5e9'],
         [26, 72, '#f5812a'],
       ].map(([x, y, c], i) => (
@@ -56,7 +56,7 @@ export function UnderstandArt() {
           <circle cx={x} cy={y} r="9" fill={String(c)} />
         </g>
       ))}
-      <circle cx="116" cy="48" r="20" fill="#0b1b34" />
+      <circle cx="116" cy="48" r="20" fill="#143254" />
       <path
         d="M107 48l6 6 12-13"
         stroke="#34d399"
@@ -107,7 +107,7 @@ export function ActArt() {
     <svg viewBox="0 0 160 96" className="h-full w-full" aria-hidden>
       <rect width="160" height="96" rx="14" fill={BG} />
       <g transform="translate(34 12)">
-        <rect x="0" y="0" width="30" height="72" rx="10" fill="#0e1c33" />
+        <rect x="0" y="0" width="30" height="72" rx="10" fill="#102a47" />
         <circle cx="15" cy="16" r="7" fill="#2a3a55" />
         <circle cx="15" cy="36" r="7" fill="#2a3a55" />
         <circle
@@ -120,14 +120,14 @@ export function ActArt() {
       </g>
       <path
         d="M84 48h46m-12-12 12 12-12 12"
-        stroke="#2563eb"
+        stroke="#1f5fa6"
         strokeWidth="4"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <rect x="84" y="66" width="52" height="10" rx="5" fill="#bfdbfe" />
-      <rect x="84" y="66" width="34" height="10" rx="5" fill="#2563eb" />
+      <rect x="84" y="66" width="52" height="10" rx="5" fill="#c3d6ec" />
+      <rect x="84" y="66" width="34" height="10" rx="5" fill="#1f5fa6" />
     </svg>
   );
 }

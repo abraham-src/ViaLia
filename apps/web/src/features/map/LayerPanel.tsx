@@ -79,7 +79,7 @@ export function LayerPanel({
                     type="checkbox"
                     checked={visible[key]}
                     onChange={() => toggle(key)}
-                    className="size-3.5 accent-[#1f6feb]"
+                    className="size-3.5 accent-[#3d7fcf]"
                   />
                   <span className="size-2" style={{ background: meta.swatch }} aria-hidden />
                   <span className="flex-1 text-[12px]">{meta.label}</span>

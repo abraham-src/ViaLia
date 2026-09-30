@@ -197,7 +197,7 @@ export function IncidentsPage() {
                 type="checkbox"
                 checked={mine}
                 onChange={() => update({ mine: mine ? null : '1' })}
-                className="accent-[#1f6feb]"
+                className="accent-[#3d7fcf]"
               />
               Solo mis asignaciones
             </label>

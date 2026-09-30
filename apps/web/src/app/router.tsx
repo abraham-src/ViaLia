@@ -27,7 +27,7 @@ function NotFound() {
   return (
     <div className="p-6">
       <p className="font-mono text-[12px] text-fg-muted">404 · Vista no encontrada</p>
-      <Link to="/" className="mt-2 inline-block text-[#58a6ff] hover:underline">
+      <Link to="/" className="mt-2 inline-block text-[#7fb0e6] hover:underline">
         Volver al dashboard
       </Link>
     </div>

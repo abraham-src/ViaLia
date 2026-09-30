@@ -8,11 +8,13 @@ import {
   LogOut,
   Boxes,
   MapPin,
+  Menu,
   SlidersHorizontal,
   TriangleAlert,
   Workflow,
+  X,
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from '../components/shell/ErrorBoundary';
 import { stopLive, useLiveSync } from '../hooks/useLiveSync';
@@ -21,7 +23,7 @@ import { ROLE_LABEL } from '../lib/labels';
 import { useAuth } from '../stores/auth';
 import { useConnection } from '../stores/connection';
 import { BRAND } from './brand';
-import { Logo } from './components/Logo';
+import { Logo, LogoMark } from './components/Logo';
 import { TrafficLightIcon, type IconType } from './components/icons';
 import { lngLatOf, useCxData, useDrainHistory } from './data/useCxData';
 import { initials } from './lib/visuals';
@@ -73,8 +75,8 @@ function NavItem({ item, badge }: { item: Item; badge?: number }) {
   const cls = (active: boolean) =>
     `group flex h-[46px] items-center gap-3 rounded-[13px] px-3.5 text-[14.5px] font-semibold transition ${
       active
-        ? 'bg-gradient-to-r from-[#2f6bff] to-[#2458e6] text-white shadow-[0_10px_24px_-10px_rgb(37_99_235/0.9)]'
-        : 'text-[#c3cee3] hover:bg-white/[0.06] hover:text-white'
+        ? 'bg-white text-cx-navy shadow-[0_10px_24px_-12px_rgb(0_0_0/0.55)]'
+        : 'text-[#cdd7e4] hover:bg-white/[0.08] hover:text-white'
     }`;
   const content = (
     <>
@@ -119,7 +121,7 @@ function LiveCard() {
         <div className="text-[13px] font-semibold text-white">
           {ok ? 'En vivo' : 'Reconectando…'}
         </div>
-        <div className="text-[11.5px] text-[#8fa0bf]">
+        <div className="text-[11.5px] text-[#9fb0c6]">
           {ok ? 'WebSocket · datos del simulador' : 'Se muestran los últimos datos'}
         </div>
       </div>
@@ -141,17 +143,17 @@ function UserCard() {
   };
   return (
     <div className="flex items-center gap-3 px-1">
-      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#3b7bff] to-[#1d4ed8] text-[13px] font-bold text-white">
+      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#2b6cb3] to-[#174b86] text-[13px] font-bold text-white">
         {initials(user.name)}
       </span>
       <div className="min-w-0 flex-1 leading-tight">
         <div className="truncate text-[13.5px] font-semibold text-white">{user.name}</div>
-        <div className="text-[12px] text-[#8fa0bf]">{ROLE_LABEL[user.role]}</div>
+        <div className="text-[12px] text-[#9fb0c6]">{ROLE_LABEL[user.role]}</div>
       </div>
       <button
         type="button"
         onClick={() => void logout()}
-        className="grid size-9 place-items-center rounded-full text-[#8fa0bf] hover:bg-white/10 hover:text-white"
+        className="grid size-9 place-items-center rounded-full text-[#9fb0c6] hover:bg-white/10 hover:text-white"
         aria-label="Cerrar sesión"
         title="Cerrar sesión"
       >
@@ -212,11 +214,70 @@ export function CxShell() {
 
   const consoleItems = CONSOLE.filter((i) => !i.roles || (role && i.roles.includes(role)));
 
+  // Menú lateral deslizable en pantallas angostas: se cierra al navegar o con Escape.
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+  const pageTitle = TITLES.find(([p]) => pathname.startsWith(p))?.[1] ?? 'Centro de control';
+
   return (
-    <div className="cx-root flex h-full min-h-0">
-      <aside className="flex w-[252px] shrink-0 flex-col bg-gradient-to-b from-[#0c1d38] via-[#0b1a31] to-[#081427] px-4 pb-4 pt-6">
-        <div className="px-1.5">
+    <div className="cx-root flex h-full min-h-0 flex-col lg:flex-row">
+      <header className="flex h-14 shrink-0 items-center gap-3 bg-cx-navy px-3 text-white shadow-[0_8px_24px_-16px_rgb(0_0_0/0.6)] lg:hidden">
+        <button
+          type="button"
+          onClick={() => setMenuOpen(true)}
+          className="grid size-10 place-items-center rounded-[12px] hover:bg-white/10"
+          aria-label="Abrir menú"
+          aria-expanded={menuOpen}
+          aria-controls="cx-sidebar"
+        >
+          <Menu size={22} />
+        </button>
+        <LogoMark size={30} />
+        <div className="min-w-0 flex-1 leading-tight">
+          <div className="text-[15px] font-extrabold tracking-[-0.01em]">{BRAND.name}</div>
+          <div className="truncate text-[11.5px] font-medium text-[#aebccd]">{pageTitle}</div>
+        </div>
+        {data.incidents.length > 0 && (
+          <NavLink
+            to="/centro/incidencias"
+            className="cx-tabular grid h-8 min-w-8 place-items-center rounded-full bg-[#ef4444] px-2 text-[12.5px] font-bold"
+            aria-label={`${data.incidents.length} incidencias activas`}
+          >
+            {data.incidents.length}
+          </NavLink>
+        )}
+      </header>
+
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-[#0d233d]/55 backdrop-blur-[2px] lg:hidden"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden
+        />
+      )}
+
+      <aside
+        id="cx-sidebar"
+        className={`fixed inset-y-0 left-0 z-50 flex w-[272px] max-w-[85vw] flex-col overflow-y-auto bg-gradient-to-b from-[#183b63] via-[#143254] to-[#0d233d] px-4 pb-4 pt-6 transition-transform duration-300 lg:static lg:z-auto lg:w-[252px] lg:max-w-none lg:shrink-0 lg:translate-x-0 ${
+          menuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
+        }`}
+      >
+        <div className="flex items-start justify-between px-1.5">
           <Logo />
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            className="-mr-1 grid size-9 place-items-center rounded-full text-[#aebccd] hover:bg-white/10 hover:text-white lg:hidden"
+            aria-label="Cerrar menú"
+          >
+            <X size={20} />
+          </button>
         </div>
         <nav aria-label="Centro de control" className="mt-8 flex flex-col gap-1.5">
           {MAIN.map((item) => (
@@ -227,7 +288,7 @@ export function CxShell() {
             />
           ))}
         </nav>
-        <div className="mb-2 mt-7 px-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#5f7299]">
+        <div className="mb-2 mt-7 px-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7489a3]">
           Consola
         </div>
         <nav aria-label="Herramientas" className="flex flex-col gap-1.5">

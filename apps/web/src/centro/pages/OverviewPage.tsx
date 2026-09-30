@@ -330,7 +330,7 @@ function CameraCard({
       action={camera ? <DeviceStatusPill status={camera.status} /> : null}
       bodyClassName="!pt-3"
     >
-      <div className="relative overflow-hidden rounded-[14px] bg-[#0b1b34]">
+      <div className="relative overflow-hidden rounded-[14px] bg-[#143254]">
         {stream ? (
           <img
             src={stream}
@@ -488,7 +488,7 @@ function SignalCard() {
       title={`Semáforo ${MAIN_LIGHT}`}
       icon={TrafficLightIcon}
       action={
-        <Pill color={fixed ? '#64748b' : '#2563eb'}>{fixed ? 'Plan fijo' : 'Adaptativo'}</Pill>
+        <Pill color={fixed ? '#64748b' : '#1f5fa6'}>{fixed ? 'Plan fijo' : 'Adaptativo'}</Pill>
       }
     >
       <div className="grid grid-cols-2 gap-2">
@@ -609,7 +609,7 @@ export function OverviewPage() {
         areas.push({
           type: 'Feature',
           properties: {
-            fill: '#2563eb',
+            fill: '#1f5fa6',
             fillOpacity: 0.035,
             line: '#8ea3c4',
             lineWidth: 1.2,
@@ -636,7 +636,7 @@ export function OverviewPage() {
     const cones: Feature[] = layers.cameras
       ? data.cameras.map((c) =>
           cone(lngLatOf(c), cameraHeading(c, data.devices, data.incidents), 62, 230, {
-            color: '#2563eb',
+            color: '#1f5fa6',
             fillOpacity: c.device_code === camera?.device_code ? 0.26 : 0.1,
           }),
         )
@@ -645,21 +645,21 @@ export function OverviewPage() {
   }, [layers, data, camera?.device_code]);
 
   return (
-    <div className="flex h-full min-h-[720px] flex-col">
+    <div className="flex min-h-full flex-col xl:h-full xl:min-h-[720px]">
       <PageHeader title="Mapa general" subtitle="Monitoreo en tiempo real de la ciudad">
         <TopActions />
       </PageHeader>
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_340px] gap-5 px-7 pb-6">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_340px] px-4 sm:px-7 pb-6">
         <CxMap
           view={HOME_VIEW}
           overlays={overlays}
-          className="h-full min-h-[560px] rounded-[22px] border border-cx-line shadow-cx"
+          className="h-[62vh] min-h-[380px] rounded-[22px] xl:h-full xl:min-h-[560px] border border-cx-line shadow-cx"
           chrome={
             <>
-              <div className="absolute left-4 top-4">
+              <div className="absolute left-4 top-4 hidden sm:block">
                 <LayerPanel layers={layers} toggle={toggle} data={data} />
               </div>
-              <div className="absolute bottom-4 left-4">
+              <div className="absolute bottom-4 left-4 hidden sm:block">
                 <Legend />
               </div>
               <div className="absolute right-4 top-4">

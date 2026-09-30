@@ -31,7 +31,7 @@ function Car({
   return (
     <g style={style}>
       <g transform={`translate(${x} 0) ${dir === 'up' ? 'rotate(180 11 20)' : ''}`}>
-        <rect x="1.5" y="3" width="21" height="38" rx="6" fill="#0b1b34" opacity="0.18" />
+        <rect x="1.5" y="3" width="21" height="38" rx="6" fill="#143254" opacity="0.18" />
         <rect x="0" y="0" width="22" height="40" rx="6" fill={color} />
         <rect
           x="2.5"
@@ -58,7 +58,7 @@ function Car({
           height="10"
           rx="2"
           fill={color}
-          stroke="#0b1b34"
+          stroke="#143254"
           strokeOpacity="0.08"
         />
         <rect x="1" y="0.5" width="4" height="2" rx="1" fill="#fde68a" />
@@ -80,7 +80,7 @@ function Car({
 function Tree({ x, y, r }: { x: number; y: number; r: number }) {
   return (
     <g>
-      <circle cx={x + 2} cy={y + 3} r={r} fill="#0b1b34" opacity="0.14" />
+      <circle cx={x + 2} cy={y + 3} r={r} fill="#143254" opacity="0.14" />
       <circle cx={x} cy={y} r={r} fill="#4c9a58" />
       <circle cx={x - r * 0.3} cy={y - r * 0.3} r={r * 0.55} fill="#6cbf72" />
     </g>
@@ -97,9 +97,9 @@ export function CameraScene({ className = '' }: { className?: string }) {
     >
       <defs>
         <linearGradient id="cx-cam-vignette" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#0b1b34" stopOpacity="0.28" />
-          <stop offset="0.35" stopColor="#0b1b34" stopOpacity="0" />
-          <stop offset="1" stopColor="#0b1b34" stopOpacity="0.32" />
+          <stop offset="0" stopColor="#143254" stopOpacity="0.28" />
+          <stop offset="0.35" stopColor="#143254" stopOpacity="0" />
+          <stop offset="1" stopColor="#143254" stopOpacity="0.32" />
         </linearGradient>
         <linearGradient id="cx-cam-scan" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#22d3ee" stopOpacity="0" />
@@ -182,7 +182,7 @@ export function CameraScene({ className = '' }: { className?: string }) {
         <Tree x={232} y={150} r={9} />
         {/* Peatón con detección */}
         <g transform="translate(226 96)">
-          <ellipse cx="4" cy="12" rx="5" ry="2" fill="#0b1b34" opacity="0.2" />
+          <ellipse cx="4" cy="12" rx="5" ry="2" fill="#143254" opacity="0.2" />
           <circle cx="4" cy="3" r="3.2" fill="#1f2937" />
           <rect x="1" y="6" width="6" height="7" rx="2.5" fill="#f97316" />
           <rect

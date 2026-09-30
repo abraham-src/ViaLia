@@ -185,7 +185,7 @@ function pedestrianHead() {
       ctx.translate(ped === 'walk' ? 60 : 64, 0);
       if (ped === 'walk') {
         // Figura caminando (blanco lunar).
-        ctx.strokeStyle = on ? '#f4f7ff' : '#262a31';
+        ctx.strokeStyle = on ? '#f2f6fb' : '#262a31';
         ctx.fillStyle = ctx.strokeStyle;
         ctx.lineWidth = 16;
         ctx.lineCap = 'round';
@@ -221,7 +221,7 @@ function pedestrianHead() {
       }
       ctx.restore();
       if (countdown !== null) {
-        ctx.fillStyle = ped === 'walk' ? '#f4f7ff' : '#ff7a1a';
+        ctx.fillStyle = ped === 'walk' ? '#f2f6fb' : '#ff7a1a';
         ctx.font = 'bold 92px monospace';
         ctx.textAlign = 'center';
         ctx.fillText(String(Math.max(0, countdown)).padStart(2, '0'), 190, 160);
@@ -263,7 +263,7 @@ function cabinet() {
   for (let i = 0; i < 6; i++) g.add(box(0.3, 0.012, 0.01, seam, [-0.08, 0.2 + i * 0.03, 0.214]));
   // Placa de identificación.
   const label = canvasTexture(256, 128, (ctx, w, h) => {
-    ctx.fillStyle = '#0c1d38';
+    ctx.fillStyle = '#183b63';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 34px sans-serif';

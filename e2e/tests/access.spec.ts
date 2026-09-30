@@ -25,6 +25,6 @@ test.describe('Acceso y roles', () => {
     await loginAs(page, 'operador');
     await page.reload();
     await expect(page.getByText('Operación Demo')).toBeVisible();
-    await expect(page).toHaveTitle('SIMU · CDMX');
+    await expect(page).toHaveTitle('ViaLia · CDMX');
   });
 });
