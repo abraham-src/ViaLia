@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { LogIn } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { LogoMark } from '../centro/components/Logo';
 import { Chip } from '../components/ui/Chip';
 import { API_BASE, ApiError, request, UnreachableError } from '../lib/api';
 import { formatTime } from '../lib/format';
@@ -112,7 +113,8 @@ export function LoginPage() {
   return (
     <div className="flex h-full flex-col">
       <header className="flex h-10 items-center border-b border-line bg-surface px-4">
-        <span className="font-mono text-[13px] font-medium tracking-wide">ViaLia · CDMX</span>
+        <LogoMark size={20} />
+        <span className="ml-2 font-mono text-[13px] font-medium tracking-wide">ViaLia · CDMX</span>
         <span className="ml-3 text-[12px] text-fg-muted">
           Sistema Inteligente de Monitoreo Urbano
         </span>
